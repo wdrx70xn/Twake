@@ -26,12 +26,15 @@ services:
       - REDIS_REPLICATION_MODE=master
   node:
     image: twaketech/twake-node:test
+    privileged: true
+    pid: host
     build:
       context: .
       dockerfile: ./docker/twake-node/Dockerfile
       target: test
     volumes:
        - ./coverage/:/usr/src/app/coverage/
+       - ./backend/node/package.json:/usr/src/app/package.json
     environment:
       - NODE_ENV=test
       - DB_DRIVER
